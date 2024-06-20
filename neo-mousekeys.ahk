@@ -47,7 +47,7 @@ Loop {
   dx := 0
   dy := 0
 
-  moveDisabled := GetKeyState("Ctrl", "P")
+  moveDisabled := GetKeyState("LCtrl", "P")
     or (Options["SystemIgnoreWinKey"] and (GetKeyState("LWin", "P") or GetKeyState("RWin", "P")))
     or (Options["EdgeEnabled"] and GetKeyState(Options["EdgeModifier"], "P"))
 
