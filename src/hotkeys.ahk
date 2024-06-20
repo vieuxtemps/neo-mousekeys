@@ -2,6 +2,12 @@
 ; Default enable hotkey
 Register(Options["ActivationEnable"], Func("Enable"))
 
+; Register symmetric hotkey if Enable is a combination
+if (InStr(Options["ActivationEnable"], " & ")) {
+  split := StrSplit(Options["ActivationEnable"], " & ")
+  Register(split[2] " & " split[1], Func("Enable"))
+}
+
 ; Enable when double pressing a sequence
 Register(Options["ActivationEnableDouble"], Func("EnableDouble"), "~")
 
