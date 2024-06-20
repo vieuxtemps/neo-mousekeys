@@ -54,6 +54,11 @@ Enable() {
     Menu, Tray, Icon, icons\enabled.ico, , 1
 }
 
+EnableDelayed(key) {
+  if (A_PriorHotkey = key)
+    Enable()
+}
+
 Disable() {
   ReleaseMouseButtons()
   enabled := false

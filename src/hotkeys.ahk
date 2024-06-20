@@ -1,10 +1,18 @@
 ; [Activation]
 ; Default enable hotkey
-Register(Options["ActivationEnable"], Func("Enable"))
+
+ActivationEnable := Options["ActivationEnable"]
+if (Options["SystemDelayActivationWithSingleModifierKey"]) {
+  Register(ActivationEnable, "LabelIgnore")
+  Register(ActivationEnable " & *", "LabelIgnore")
+  Register(ActivationEnable, Func("EnableDelayed").Bind(ActivationEnable), "", " up")
+} else {
+  Register(ActivationEnable, Func("Enable"))
+}
 
 ; Register symmetric hotkey if Enable is a combination
-if (InStr(Options["ActivationEnable"], " & ")) {
-  split := StrSplit(Options["ActivationEnable"], " & ")
+if (InStr(ActivationEnable, " & ")) {
+  split := StrSplit(ActivationEnable, " & ")
   Register(split[2] " & " split[1], Func("Enable"))
 }
 
