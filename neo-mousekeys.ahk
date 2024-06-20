@@ -26,6 +26,8 @@ Thread, Interrupt, 0
 global axisMap := { "Left": [-1, 0], "Down": [0, 1], "Up": [0, -1], "Right": [1, 0] }
 global mouseMap := { "Left": "LButton", "Middle": "MButton", "Right": "RButton" }
 
+global wheelSplit := StrSplit(Options["ModeWheelFast"], A_Space, A_Space)
+
 #Include src/init-indicator.ahk
 #Include src/hotkeys.ahk
 
