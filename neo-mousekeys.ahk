@@ -3,7 +3,20 @@
 #MaxHotkeysPerInterval 300
 #UseHook
 
+;@Ahk2Exe-SetMainIcon icons\disabled.ico
+;@Ahk2Exe-AddResource icons\enabled.ico, 206
+;@Ahk2Exe-Obey U_Version, FileRead U_Version`, version
+;@Ahk2Exe-SetFileVersion %U_Version%
+;@Ahk2Exe-SetProductVersion Build v%U_Version% AutoHotkey v%A_AhkVersion%
+
+Menu, Tray, Tip, Neo Mousekeys
+
 #Include src/options.ahk
+
+if (Options["SystemHideTrayIcon"])
+  Menu, Tray, NoIcon
+else if (not A_IsCompiled)
+  Menu, Tray, Icon, icons\disabled.ico, , 1
 
 CoordMode, Mouse, Screen
 SetKeyDelay, -1
@@ -28,7 +41,6 @@ Loop {
     Sleep, 10
     continue
   }
-
 
   dx := 0
   dy := 0

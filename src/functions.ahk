@@ -37,10 +37,24 @@ ToggleClick(btn) {
   UpdateIndicatorColors(next)
 }
 
+Enable() {
+  enabled := true
+
+  if (A_IsCompiled)
+    Menu, Tray, Icon, % A_ScriptFullPath, -206, 1
+  else
+    Menu, Tray, Icon, icons\enabled.ico, , 1
+}
+
 Disable() {
   ReleaseMouseButtons()
   enabled := false
   Gui, Show, Hide
+
+  if (A_IsCompiled)
+    Menu, Tray, Icon, % A_ScriptFullPath, -159, 1
+  else
+    Menu, Tray, Icon, icons\disabled.ico, , 1
 }
 
 LabelDisable:
@@ -53,20 +67,21 @@ LabelClickThenDisable:
 return
 
 LabelEnable:
-  enabled := true
+  Enable()
 return
 
 LabelEnableDouble:
   if (A_PriorKey == Options["ActivationEnableDouble"]
     and A_TimeSincePriorHotkey > 0
     and A_TimeSincePriorHotkey < 400) {
-    enabled := true
+    Enable()
   }
 return
 
 EnableHold(state) {
-  enabled := state == "down" ? true : false
-  if (not enabled)
+  if (state == "down")
+    Enable()
+  else
     Disable()
 }
 
