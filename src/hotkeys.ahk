@@ -32,6 +32,18 @@ if (Options["ActivationEnableDouble"])
         HotKey, % modifier Options["Click" btn] " up", % fnUp
       }
     }
+
+    if (Options["EdgeEnabled"]) {
+      fnEdgeClickDown := Func("DoClick").Bind(btn, "down")
+      fnEdgeClickUp := Func("DoClick").Bind(btn, "up")
+      HotKey, % Options["EdgeModifier"] " & " Options["Click" btn], % fnEdgeClickDown
+      HotKey, % Options["EdgeModifier"] " & " Options["Click" btn] " up", % fnEdgeClickUp
+    }
+  }
+
+  for direction, _ in axisMap {
+    if (Options["EdgeEnabled"])
+      HotKey, % Options["EdgeModifier"] " & " Options["Movement" direction], LabelIgnore
   }
 
   HotKey, If
