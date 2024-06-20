@@ -1,5 +1,6 @@
 global v := Options["MouseSpeedInitial"]
 global slowToggle := false
+global fastToggle := false
 global lastEdge := A_TickCount
 
 Loop {
@@ -31,16 +32,19 @@ Loop {
 
     if (GetKeyState(Options["ModeJump"], "P")) {
       factor := Options["ModeSpeedJump"]
-      slowToggle := false
+      slowToggle := false, fastToggle := false
     } else if (GetKeyState(Options["ModeFast"], "P")) {
       factor := Options["ModeSpeedFast"]
       slowToggle := false
     } else if (GetKeyState(Options["ModeSlow"], "P")) {
       factor := Options["ModeSpeedSlow"]
+      fastToggle := false
     }
 
     if (slowToggle)
       factor := Options["ModeSpeedSlow"]
+    else if (fastToggle)
+      factor := Options["ModeSpeedFast"]
 
     MouseMove, % dx * v * factor, % dy * v * factor, 1, R
 

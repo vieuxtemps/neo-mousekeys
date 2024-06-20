@@ -46,7 +46,15 @@ Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " u
   }
 
   ; [Mode]
-  Register(Options["ModeToggleSlow"], Func("ToggleSlowMode"), "~")
+  if (InStr(Options["ModeToggleSlow"], "Shift", 0))
+    Register(Options["ModeToggleSlow"], Func("ToggleSlowMode"), "~")
+  else
+    Register(Options["ModeToggleSlow"], Func("ToggleSlowMode"))
+
+  if (InStr(Options["ModeToggleFast"], "Shift", 0))
+    Register(Options["ModeToggleFast"], Func("ToggleFastMode"), "~")
+  else
+    Register(Options["ModeToggleFast"], Func("ToggleFastMode"))
 
   ; [Click]
   for btn, _ in mouseMap {

@@ -113,5 +113,9 @@ ToggleSlowMode() {
   slowToggle := not slowToggle
 }
 
+ToggleFastMode() {
+  fastToggle := not fastToggle
+}
+
 LabelIgnore:
 return
