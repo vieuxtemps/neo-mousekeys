@@ -1,31 +1,42 @@
 CheckEdges:
   if (enabled) {
     if (Options["EdgeEnabled"] and GetKeyState(Options["EdgeModifier"], "P")) {
-      if ((Options["EdgeSensitivity"] == 0) and (A_TickCount - lastEdge < 500))
+      if ((Options["EdgeSensitivity"] == 0) and (A_TickCount - lastEdge < 200))
         return
+      if ((Options["EdgeSensitivity"] > 0) and (A_TickCount - lastEdge < 40))
+        return
+
+      eX := mMonX, eY := mMonY
+      splitX := Options["EdgeSplitX"], splitY := Options["EdgeSplitY"]
 
       for direction, _ in axisMap {
         if (GetKeyState(Options["Movement" direction], "P")) {
           UpdateMonitors()
 
-          offsetX := Monitor_Right * Options["EdgeOffsetX"]
-          offsetY := Monitor_Bottom * Options["EdgeOffsetY"]
+          L := Monitor_Left, R := Monitor_Right, T := Monitor_Top, B := Monitor_Bottom
 
-          eX := direction == "Right" ? Monitor_Right - offsetX : 0
-          eX := direction == "Left" ? offsetX + Monitor_Left: eX
-          eX := eX == 0 ? mMonX : eX
+          hMID := (L + R) // 2
+          vMID := (T + B) // 2
 
-          eY := direction == "Up" ? offsetY + Monitor_Top : 0
-          eY := direction == "Down" ? Monitor_Bottom - offsetY : eY
-          eY := eY == 0 ? mMonY : eY
+          oX := R * Options["EdgeOffsetX"]
+          oY := B * Options["EdgeOffsetY"]
 
-          if (eX or eY) {
-            MouseMove, % eX, % eY, % Options["EdgeDelay"]
-            lastEdge := A_TickCount
-            if (Options["EdgeSensitivity"] <= 1)
-              return
-          }
+          if (direction == "Right")
+            eX := (splitX and mMonX < hMID) ? hMID : R - oX
+          else if (direction == "Left")
+            eX := (splitX and mMonX > hMID) ? hMID : L + oX
+          else if (direction == "Down")
+            eY := (splitY and mMonY < vMID) ? vMID : B - oY
+          else if (direction == "Up")
+            eY := (splitY and mMonY > vMID) ? vMID : T + oY
         }
+      }
+
+      if (eX or eY) {
+        MouseMove, % eX, % eY, % Options["EdgeDelay"]
+        lastEdge := A_TickCount
+        if (Options["EdgeSensitivity"] <= 1)
+          return
       }
     }
   }

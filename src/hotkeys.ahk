@@ -101,10 +101,15 @@ if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
     }
   }
 
-  ; Prevents sending movement keys while holding the edge modifier
   if (Options["EdgeEnabled"]) {
+    ; Prevents sending movement keys while holding the edge modifier
     for direction, _ in axisMap {
       Register(Options["EdgeModifier"] " & " Options["Movement" direction], "LabelIgnore")
+    }
+
+    ; Allow move to middle while holding the edge modifier
+    for _, key in StrSplit(Options["ZonesMoveToMiddle"], A_Space, A_Space) {
+      Register(Options["EdgeModifier"] " & " key, Func("MoveToMiddle"))
     }
   }
 
