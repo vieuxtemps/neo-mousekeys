@@ -1,3 +1,10 @@
+Register(keys, target, prefix := "", suffix := "") {
+  if (keys) {
+    for _, key in StrSplit(keys, A_Space, A_Space)
+      HotKey, % prefix key suffix, % target
+  }
+}
+
 UpdateIndicatorColors(state) {
   color := state == "down" ? Options["IndicatorColorDragging"] : Options["IndicatorColor"]
   Gui, Font, c%color%
@@ -57,26 +64,18 @@ Disable() {
     Menu, Tray, Icon, icons\disabled.ico, , 1
 }
 
-LabelDisable:
-  Disable()
-return
-
-LabelClickThenDisable:
+LeftClickThenDisable() {
   Disable()
   Click
-return
+}
 
-LabelEnable:
-  Enable()
-return
-
-LabelEnableDouble:
+EnableDouble() {
   if (A_PriorKey == Options["ActivationEnableDouble"]
     and A_TimeSincePriorHotkey > 0
     and A_TimeSincePriorHotkey < 400) {
     Enable()
   }
-return
+}
 
 EnableHold(state) {
   if (state == "down")
@@ -85,9 +84,9 @@ EnableHold(state) {
     Disable()
 }
 
-LabelIgnore:
-return
-
-LabelMoveToMiddle:
+MoveToMiddle() {
   MouseMove, A_ScreenWidth // 2, A_ScreenHeight // 2, 1
+}
+
+LabelIgnore:
 return
