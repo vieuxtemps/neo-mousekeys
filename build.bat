@@ -85,6 +85,12 @@ cmd /c "echo %HASHES%" | clip
 
 echo:
 
+set /p choice="Delete ./build? (y/n): "
+if /i "!choice!"=="y" (
+  rmdir /S /Q build 2>nul
+)
+echo:
+
 set /p choice="Open explorer and GitHub? (y/n): "
 
 set "BROWSER=C:\Progra~1\Google\Chrome\Application\chrome.exe"
