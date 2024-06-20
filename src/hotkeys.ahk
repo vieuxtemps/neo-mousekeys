@@ -1,4 +1,5 @@
-HotKey, % Options["ActivationEnable"], LabelActivate
+HotKey, % Options["ActivationEnable"], LabelEnable
+
 
 #If enabled
   HotKey, If, enabled
@@ -9,19 +10,24 @@ HotKey, % Options["ActivationEnable"], LabelActivate
     IniRead, sectionData, options.ini, % section
     Loop, Parse, sectionData, `n, `r
     {
-      split := StrSplit(A_LoopField, "=", A_Space, 2)[1]
-      HotKey, % Options[section split], LabelIgnore
+      cmd := StrSplit(A_LoopField, "=", A_Space, 2)[1]
+      HotKey, % Options[section cmd], LabelIgnore
+
+      if (Options["SystemAllowShiftHotkeys"])
+        HotKey, % "+" Options[section cmd], LabelIgnore
     }
   }
 
-  HotKey, % Options["ClickLeft"], LabelLeft
-  HotKey, % Options["ClickLeft"] " up", LabelLeftUp
-
-  HotKey, % Options["ClickMiddle"], LabelMiddle
-  HotKey, % Options["ClickMiddle"] " up", LabelMiddleUp
-
-  HotKey, % Options["ClickRight"], LabelRight
-  HotKey, % Options["ClickRight"] " up", LabelRightUp
+  for _, btn in ["Left", "Middle", "Right"] {
+    for _, modifier in ["", "^", "+"] {
+      if (modifier != "+" or Options["SystemAllowShiftHotkeys"]) {
+        fnDown := Func("DoClick").Bind(btn, "down")
+        fnUp := Func("DoClick").Bind(btn, "up")
+        HotKey, % modifier Options["Click" btn], % fnDown
+        HotKey, % modifier Options["Click" btn] " up", % fnUp
+      }
+    }
+  }
 
   HotKey, If
 #If
