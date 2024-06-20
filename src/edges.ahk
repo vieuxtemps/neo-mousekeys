@@ -10,18 +10,14 @@ CheckEdges:
 
           eX := direction == "Right" ? A_ScreenWidth - offsetX : 0
           eX := direction == "Left" ? offsetX : eX
-          if (eX == 0)
-            eX := emX
+          eX := eX == 0 ? emX : eX
 
           eY := direction == "Up" ? offsetY : 0
           eY := direction == "Down" ? A_ScreenHeight - offsetY : eY
-          if (eY == 0)
-            eY := emY
+          eY := eY == 0 ? emY : eY
 
-          if (eX or eY) {
-            MouseMove, % eX, % eY, 2
-            return
-          }
+          if (eX or eY)
+            MouseMove, % eX, % eY, % Options["EdgeDelay"]
         }
       }
     }

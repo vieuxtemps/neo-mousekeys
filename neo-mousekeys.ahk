@@ -30,8 +30,8 @@ global mouseMap := { "Left": "LButton", "Middle": "MButton", "Right": "RButton" 
 #Include src/hotkeys.ahk
 
 SetTimer, DrawIndicator, 10
+SetTimer, CheckEdges, 10
 SetTimer, CheckWheels, 50
-SetTimer, CheckEdges, 50
 
 global v := Options["MouseSpeedInitial"]
 global enabled := false
@@ -45,30 +45,34 @@ Loop {
   dx := 0
   dy := 0
 
-  factor := 1
-  if (GetKeyState(Options["ModeFast"], "P"))
-    factor := Options["ModeSpeedFast"]
-  else if (GetKeyState(Options["ModeSlow"], "P"))
-    factor := Options["ModeSpeedSlow"]
-  else if (GetKeyState(Options["ModeJump"], "P"))
-    factor := Options["ModeSpeedJump"]
+  moveDisabled := GetKeyState("Ctrl", "P")
+    or (Options["SystemIgnoreWinKey"] and (GetKeyState("LWin", "P") or GetKeyState("RWin", "P")))
+    or (Options["EdgeEnabled"] and GetKeyState(Options["EdgeModifier"], "P"))
 
-  for direction, axis in axisMap {
-    mod := GetKeyState("Ctrl", "P")
-      or (Options["SystemIgnoreWinKey"] and (GetKeyState("LWin", "P") or GetKeyState("RWin", "P")))
-
-    if (not mod and GetKeyState(Options["Movement" direction], "P")) {
-      dx += axis[1]
-      dy += axis[2]
+  if (not moveDisabled) {
+    for direction, axis in axisMap {
+      if (GetKeyState(Options["Movement" direction], "P")) {
+        dx += axis[1]
+        dy += axis[2]
+      }
     }
   }
 
   if (dx == 0 and dy == 0) {
     v := Options["MouseSpeedInitial"]
   } else {
+    factor := 1
+    if (GetKeyState(Options["ModeFast"], "P"))
+      factor := Options["ModeSpeedFast"]
+    else if (GetKeyState(Options["ModeSlow"], "P"))
+      factor := Options["ModeSpeedSlow"]
+    else if (GetKeyState(Options["ModeJump"], "P"))
+      factor := Options["ModeSpeedJump"]
+
+    MouseMove, % dx * v * factor, % dy * v * factor, 1, R
+
     a := Options["MouseSpeedAcceleration"]
     max := Options["MouseSpeedMax"]
-    MouseMove, % dx * v * factor, % dy * v * factor, 1, R
     if (v < max)
       v := Min(max, v * a)
   }
