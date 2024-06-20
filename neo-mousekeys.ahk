@@ -13,6 +13,7 @@
 ;@Ahk2Exe-SetProductVersion Build v%U_Version% AutoHotkey v%A_AhkVersion%
 
 Menu, Tray, Tip, Neo Mousekeys
+OnExit, ExitSub
 
 #Include src/monitors.ahk
 #Include src/options.ahk
@@ -44,13 +45,23 @@ global enabled := false
 
 SetTimer, DrawIndicator, 10
 SetTimer, CheckEdges, 10
-SetTimer, CheckWheels, 10
+SetTimer, CheckWheels, % WHEELTIME
+
+if (Options["CursorHideCursorAfterSeconds"] or Options["CursorIdleTimeout"])
+  SetTimer, CheckMouseActivity, 50
 
 #Include src/main.ahk
 #Include src/draw-indicator.ahk
 #Include src/wheels.ahk
 #Include src/edges.ahk
 #Include src/functions.ahk
+#Include src/hide-cursor.ahk
 
 ; Use for your own personal keybindings. Ignored if it doesn't exist, ignored by .gitignore
 #Include *i src/custom.ahk
+
+ExitSub:
+  if (Options["CursorHideCursorAfterSeconds"])
+    SystemCursor(1)
+ExitApp
+return
