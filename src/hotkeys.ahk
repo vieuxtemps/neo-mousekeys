@@ -1,10 +1,15 @@
 HotKey, % Options["ActivationEnable"], LabelEnable
 
+if (Options["ActivationEnableDouble"])
+  HotKey, % "~" Options["ActivationEnableDouble"], LabelEnableDouble
 
 #If enabled
   HotKey, If, enabled
 
   HotKey, % Options["DeactivationDisable"], LabelDisable
+
+  if (Options["DeactivationClickThenDisable"])
+    HotKey, % Options["DeactivationClickThenDisable"], LabelClickThenDisable
 
   for _, section in ["Movement", "Mode", "Wheel"] {
     IniRead, sectionData, options.ini, % section
