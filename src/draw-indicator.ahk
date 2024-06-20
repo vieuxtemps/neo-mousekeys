@@ -1,10 +1,11 @@
 DrawIndicator:
   if (enabled) {
-    MouseGetPos, mX, mY
-    tX := mX + Options["IndicatorOffsetX"]
-    tY := mY + Options["IndicatorOffsetY"]
-    tX := Min(tX, A_ScreenWidth - 30)
-    tY := Min(tY, A_ScreenHeight - 30)
+    UpdateMonitors()
+    tX := mMonX + Options["IndicatorOffsetX"]
+    tY := mMonY + Options["IndicatorOffsetY"]
+    indicatorSizeOffset := Options["IndicatorSize"] * 2.5
+    tX := Min(tX, Monitor_Right - indicatorSizeOffset)
+    tY := Min(tY, Monitor_Bottom - indicatorSizeOffset)
     Gui, Show, % "X" tX " Y" tY " NA"
   }
 return

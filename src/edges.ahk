@@ -1,20 +1,20 @@
 CheckEdges:
   if (enabled) {
     if (Options["EdgeEnabled"] and GetKeyState(Options["EdgeModifier"], "P")) {
+      UpdateMonitors()
+
       for direction, _ in axisMap {
         if (GetKeyState(Options["Movement" direction], "P")) {
-          offsetX := Options["EdgeOffsetX"]
-          offsetY := Options["EdgeOffsetY"]
+          offsetX := Monitor_Right * Options["EdgeOffsetX"]
+          offsetY := Monitor_Bottom * Options["EdgeOffsetY"]
 
-          MouseGetPos, emX, emY
+          eX := direction == "Right" ? Monitor_Right - offsetX : 0
+          eX := direction == "Left" ? offsetX + Monitor_Left: eX
+          eX := eX == 0 ? mMonX : eX
 
-          eX := direction == "Right" ? A_ScreenWidth - offsetX : 0
-          eX := direction == "Left" ? offsetX : eX
-          eX := eX == 0 ? emX : eX
-
-          eY := direction == "Up" ? offsetY : 0
-          eY := direction == "Down" ? A_ScreenHeight - offsetY : eY
-          eY := eY == 0 ? emY : eY
+          eY := direction == "Up" ? offsetY + Monitor_Top : 0
+          eY := direction == "Down" ? Monitor_Bottom - offsetY : eY
+          eY := eY == 0 ? mMonY : eY
 
           if (eX or eY) {
             MouseMove, % eX, % eY, % Options["EdgeDelay"]

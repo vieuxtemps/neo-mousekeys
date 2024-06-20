@@ -11,6 +11,7 @@
 
 Menu, Tray, Tip, Neo Mousekeys
 
+#Include src/monitors.ahk
 #Include src/options.ahk
 #Include src/init-wheels.ahk
 

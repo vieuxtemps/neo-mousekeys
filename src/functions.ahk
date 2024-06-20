@@ -91,7 +91,10 @@ EnableHold(state) {
 }
 
 MoveToMiddle() {
-  MouseMove, A_ScreenWidth // 2, A_ScreenHeight // 2, % Options["EdgeDelay"]
+  UpdateMonitors()
+  Middle_X := Monitor_W // 2 + Monitor_Left
+  Middle_Y := Monitor_H // 2 + Monitor_Top
+  MouseMove, % Middle_X, % Middle_Y, % Options["EdgeDelay"]
 }
 
 ToggleSlowMode() {
