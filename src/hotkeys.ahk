@@ -22,8 +22,10 @@ Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " u
   ; [Deactivation]
   Register(Options["DeactivationDisable"], Func("Disable"))
 
-  ; [Click]
-  ; When enabled, don't send keys in ["Movement", "Mode", "Wheel"]
+  ; When enabled, don't send keys in:
+  ; [Movement]
+  ; [Mode]
+  ; [Wheel]
   for _, section in ["Movement", "Mode", "Wheel"] {
     IniRead, sectionData, options.ini, % section
     Loop, Parse, sectionData, `n, `r
@@ -35,6 +37,10 @@ Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " u
     }
   }
 
+  ; [Mode]
+  Register(Options["ModeToggleSlow"], Func("ToggleSlowMode"), "~")
+
+  ; [Click]
   for btn, _ in mouseMap {
     ; Registers click functionality (Standard, Ctrl and Shift-clicks)
     for _, modifier in ["", "^", "+"] {

@@ -15,10 +15,14 @@ CheckWheels:
     for _, key in wheelFastSplit {
       if (GetKeyState(key, "P")) {
         velocity := wFAST
+        slowToggle := false
         break
       }
     }
   }
+
+  if (slowToggle)
+    velocity := wSLOW
 
   for direction, _ in axisMap {
     if (GetKeyState(Options["Wheel" direction], "P"))

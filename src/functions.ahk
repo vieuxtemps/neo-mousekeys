@@ -89,5 +89,9 @@ MoveToMiddle() {
   MouseMove, A_ScreenWidth // 2, A_ScreenHeight // 2, % Options["EdgeDelay"]
 }
 
+ToggleSlowMode() {
+  slowToggle := not slowToggle
+}
+
 LabelIgnore:
 return
