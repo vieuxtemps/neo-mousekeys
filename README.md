@@ -72,7 +72,7 @@ Here are some improvements of neo-mousekeys when compared to mouseable:
 
 - Very low (~2MB) memory footprint.
 
-- Doesn't lock up keys when using modifiers: for example, if you use WASD for movement — while the application is enabled, you can now press Ctrl+W to close a browser tab, of Win+D to show the desktop.
+- Doesn't lock up keys when using modifiers: for example, if you use WASD for movement — while the application is enabled, you can now press Ctrl+W to close a browser tab, and Win+D to show the desktop.
 
 - Jumping (teleport) won't break if you spam the jump command.
 
