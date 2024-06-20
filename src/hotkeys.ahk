@@ -79,5 +79,8 @@ Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " u
   ; [Zone]
   Register(Options["ZonesMoveToMiddle"], Func("MoveToMiddle"))
 
+  ; [System]
+  Register("~" Options["SystemDisableAndSendCombination"], Func("Disable"), "~")
+
   HotKey, If
 #If
