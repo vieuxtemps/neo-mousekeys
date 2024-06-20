@@ -49,6 +49,8 @@ Some commands, such as Enable, support multiple keybinds. For instance, `Enable=
 
 To map a double press to the Enable command, such as double pressing `Left Ctrl` within a small timeframe, simply set `EnableDouble=LControl`.
 
+If you whish to set the Enable command to a single modifier key (such as RControl), while still being able to use related hotkeys such as `RControl+W`, set `DelayActivationWithSingleModifierKey=1`.
+
 ### Using key names directly
 If you want to set activation keys as a single key, use keynames found in the official [documentation](https://www.autohotkey.com/docs/v1/KeyList.htm#modifier) (common keys: LControl, LWin, LAlt, LShift, RAlt, RWin, RControl, Space).
 
@@ -119,6 +121,9 @@ Be aware that you keyboard might not support certain key combinations to be pres
 
 # Troubleshooting
 In case you encounter any issues after editing `options.ini`, make sure your text editor is saving it with UTF-16 LE encoding.
+
+# Interoperability with windows-vim-mode
+If you use [windows-vim-mode](https://github.com/vieuxtemps/windows-vim-mode), you can quickly switch between Enabled mode from neo-mousekeys and windows-vim-mode's Normal mode by uncommenting the line `DisableAndSendCombination=+Capslock` in `options.ini`. Use `DisableAndSendCombination=^[` if you use `Ctrl+[` as the activation sequence in windows-vim-mode.
 
 # Similar and recommended tools
 - [mouseable](https://github.com/wirekang/mouseable): mousekeys for Windows, the original version.
