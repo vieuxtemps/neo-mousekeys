@@ -23,6 +23,22 @@ Register(Options["ActivationEnableDouble"], Func("EnableDouble"), "~")
 Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("down"))
 Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " up")
 
+; IgnoreGroup: don't enable when active
+if (Options["SystemIgnoreWhenActive"]) {
+  for _, e in StrSplit(Options["SystemIgnoreWhenActive"], ",", A_Space) {
+    if (e and e != "ERROR")
+      GroupAdd, IgnoreGroup, ahk_exe %e%
+  }
+}
+
+; IgnoreFullscreenGroup: don't disable activation hotkey while in fullscreen
+if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
+  for _, e in StrSplit(Options["SystemIgnoreWhenFullscreenExceptions"], ",", A_Space) {
+    if (e and e != "ERROR")
+      GroupAdd, IgnoreFullscreenGroup, ahk_exe %e%
+  }
+}
+
 ; Enabled section
 #If enabled
   HotKey, If, enabled

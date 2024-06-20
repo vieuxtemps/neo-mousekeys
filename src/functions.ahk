@@ -49,6 +49,19 @@ ToggleClick(btn) {
 }
 
 Enable() {
+  if (WinActive("ahk_group IgnoreGroup")) {
+    return
+  }
+
+  ; Ignore when in fullscreen
+  if (Options["SystemIgnoreWhenFullscreen"] and not WinActive("ahk_group IgnoreFullscreenGroup")) {
+    WinGetPos, X, Y, W, H, A
+    if (X == Monitor_Left and Y == Monitor_Top
+      and W == (Monitor_Right - Monitor_Left)
+      and H == (Monitor_Bottom - Monitor_Top)) {
+      return
+    }
+  }
 
   if (Options["CursorHideCursorAfterSeconds"]) {
     cursor := true
