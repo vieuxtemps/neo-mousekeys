@@ -92,8 +92,8 @@ EnableHold(state) {
 
 MoveToMiddle() {
   UpdateMonitors()
-  Middle_X := Monitor_W // 2 + Monitor_Left
-  Middle_Y := Monitor_H // 2 + Monitor_Top
+  Middle_X := (Monitor_Left + Monitor_Right) // 2
+  Middle_Y := (Monitor_Top + Monitor_Bottom) // 2
   MouseMove, % Middle_X, % Middle_Y, % Options["EdgeDelay"]
 }
 

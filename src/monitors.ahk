@@ -3,7 +3,6 @@ global MonitorCount
 global Monitors := {}
 
 global Monitor_Left, Monitor_Right, Monitor_Top, Monitor_Bottom
-global Monitor_W, Monitor_H
 global mMonX, mMonY
 
 Loop, %MonitorCount%
@@ -32,6 +31,4 @@ UpdateMonitors() {
   M := CurrentMonitor()
   Monitor_Left := Monitors[M "Left"], Monitor_Right := Monitors[M "Right"]
   Monitor_Top := Monitors[M "Top"], Monitor_Bottom := Monitors[M "Bottom"]
-  Monitor_W := (MonitorRight - MonitorLeft)
-  Monitor_H := (MonitorBottom - MonitorTop)
 }
