@@ -24,8 +24,11 @@ global v := Options["MouseSpeedInitial"]
 global enabled := false
 
 Loop {
-  if (not enabled)
+  if (not enabled) {
+    Sleep, 10
     continue
+  }
+
 
   dx := 0
   dy := 0
