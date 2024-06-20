@@ -64,5 +64,11 @@ LabelEnableDouble:
   }
 return
 
+EnableHold(state) {
+  enabled := state == "down" ? true : false
+  if (not enabled)
+    Disable()
+}
+
 LabelIgnore:
 return

@@ -1,5 +1,15 @@
 HotKey, % Options["ActivationEnable"], LabelEnable
 
+; Enable while holding a key
+holdKey := Options["ActivationEnableHold"]
+if (holdKey) {
+  fnDown := Func("EnableHold").Bind( "down")
+  fnUp := Func("EnableHold").Bind("up")
+  HotKey, % holdKey, % fnDown
+  HotKey, % holdKey " up", % fnUp
+}
+
+; Enable when double pressing a sequence
 if (Options["ActivationEnableDouble"])
   HotKey, % "~" Options["ActivationEnableDouble"], LabelEnableDouble
 
