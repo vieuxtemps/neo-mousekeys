@@ -14,8 +14,6 @@ Menu, Tray, Tip, Neo Mousekeys
 #Include src/options.ahk
 #Include src/init-wheels.ahk
 
-OnExit, LabelExit
-
 if (Options["SystemHideTrayIcon"])
   Menu, Tray, NoIcon
 else if (not A_IsCompiled)
@@ -34,7 +32,7 @@ global mouseMap := { "Left": "LButton", "Middle": "MButton", "Right": "RButton" 
 
 SetTimer, DrawIndicator, 10
 SetTimer, CheckEdges, 10
-SetTimer, CheckWheels, 50
+SetTimer, CheckWheels, 10
 
 global v := Options["MouseSpeedInitial"]
 global enabled := false
@@ -85,10 +83,3 @@ Loop {
 #Include src/wheels.ahk
 #Include src/edges.ahk
 #Include src/functions.ahk
-
-LabelExit:
-  ; Safety check: restores wheel speed (application
-  ; could be closed while holding the modifier).
-  SetWheelSpeed(originalScrollLines)
-ExitApp
-return
