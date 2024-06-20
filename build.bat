@@ -52,7 +52,7 @@ move %OUTPUT% dist
 echo Done compiling.
 echo:
 
-set "HASHES=Hashes (%OUTPUT%): & echo MD5=%MD5% & echo SHA1=%SHA1% & echo SHA256=%SHA256%"
+set "HASHES=Hashes (%OUTPUT%): & echo MD5: %MD5% & echo SHA1: %SHA1% & echo SHA256: %SHA256%"
 
 setlocal enabledelayedexpansion
 
