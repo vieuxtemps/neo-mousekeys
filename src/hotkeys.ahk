@@ -49,8 +49,11 @@ Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " u
     ; [Edge]
     ; Click while holding edge button (edge case)
     if (Options["EdgeEnabled"]) {
-      Register(Options["EdgeModifier"] " & " Options["Click" btn], Func("DoClick").Bind(btn, "down"))
-      Register(Options["EdgeModifier"] " & " Options["Click" btn], Func("DoClick").Bind(btn, "up"), "", " up")
+      ; Nested edge case: Options["Click" btn] might be a key list
+      for _, key in StrSplit(Options["Click" btn], A_Space, A_Space) {
+        Register(Options["EdgeModifier"] " & " key, Func("DoClick").Bind(btn, "down"))
+        Register(Options["EdgeModifier"] " & " key, Func("DoClick").Bind(btn, "up"), "", " up")
+      }
     }
   }
 

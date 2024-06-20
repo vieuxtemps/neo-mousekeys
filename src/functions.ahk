@@ -1,6 +1,7 @@
 Register(keys, target, prefix := "", suffix := "") {
   if (keys) {
-    for _, key in StrSplit(keys, A_Space, A_Space)
+    keys := InStr(keys, " & ") ? [keys] : StrSplit(keys, A_Space, A_Space)
+    for _, key in keys
       HotKey, % prefix key suffix, % target
   }
 }
