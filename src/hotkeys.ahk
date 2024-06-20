@@ -115,10 +115,9 @@ if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
 
   ; [Zone]
   Register(Options["ZonesMoveToMiddle"], Func("MoveToMiddle"))
+  Register(Options["ZonesMoveToMiddleOfMainMonitor"], Func("MoveToMiddle").Bind(true))
 
   ; [System]
-  Register(Options["SystemRestartNeomousekeys"], Func("RestartNeomousekeys"))
-
   Register(Options["SystemDisableAndSendCombination"], Func("Disable"), "~")
 
   if (Options["SystemDisableOnPhysicalClick"]) {
@@ -128,3 +127,5 @@ if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
 
   HotKey, If
 #If
+
+Register(Options["SystemRestartNeomousekeys"], Func("RestartNeomousekeys"))

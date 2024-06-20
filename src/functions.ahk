@@ -115,10 +115,11 @@ EnableHold(state) {
     Disable()
 }
 
-MoveToMiddle() {
+MoveToMiddle(mainMonitor := false) {
   UpdateMonitors()
-  Middle_X := (Monitor_Left + Monitor_Right) // 2
-  Middle_Y := (Monitor_Top + Monitor_Bottom) // 2
+  I := Options["ZonesMainMonitorIndex"]
+  Middle_X := (mainMonitor ? Monitors[I "Left"] + Monitors[I "Right"] : Monitor_Left + Monitor_Right) // 2
+  Middle_Y := (mainMonitor ? Monitors[I "Top"] + Monitors[I "Bottom"] : Monitor_Top + Monitor_Bottom) // 2
   MouseMove, % Middle_X, % Middle_Y, % Options["EdgeDelay"]
 }
 
