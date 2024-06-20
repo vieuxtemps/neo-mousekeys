@@ -18,4 +18,5 @@ WheelScroll(velocity, direction) {
     Send, {Blind}{LShift up}{RShift up}
 
   DllCall("mouse_event", "UInt", op, "UInt", 0, "UInt", 0, "UInt", velocity, "UInt", 0)
+  lastCursorActivity := A_TickCount
 }

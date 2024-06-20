@@ -15,6 +15,11 @@ Menu, Tray, Tip, Neo Mousekeys
 #Include src/options.ahk
 #Include src/init-wheels.ahk
 
+global CURSOR_TIMEOUT := Options["CursorHideCursorAfterSeconds"] * 1000
+global IDLE_TIMEOUT := Options["CursorIdleTimeout"] * 1000
+global lastCursorActivity := A_TickCount
+global cursor := true
+
 if (Options["SystemHideTrayIcon"])
   Menu, Tray, NoIcon
 else if (not A_IsCompiled)

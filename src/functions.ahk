@@ -31,8 +31,10 @@ ReleaseMouseButtons() {
 
 DoClick(btn, newState) {
   curState := GetKeyState(mouseMap[btn]) ? "down" : "up"
-  if (curState != newState and ReleaseMouseButtons() == 0)
+  if (curState != newState and ReleaseMouseButtons() == 0) {
     Click, % btn " " newState
+    lastCursorActivity := A_TickCount
+  }
 }
 
 ToggleClick(btn) {
@@ -42,10 +44,18 @@ ToggleClick(btn) {
 
   next := GetKeyState(mouseMap[btn]) ? "up" : "down"
   Click, % btn " " next
+  lastCursorActivity := A_TickCount
   UpdateIndicatorColors(next)
 }
 
 Enable() {
+
+  if (Options["CursorHideCursorAfterSeconds"]) {
+    cursor := true
+    lastCursorActivity := A_TickCount
+    SystemCursor(1)
+  }
+
   enabled := true
 
   if (A_IsCompiled)
@@ -59,8 +69,10 @@ EnableDelayed(key) {
     Enable()
 }
 
-Disable() {
-  ReleaseMouseButtons()
+Disable(release := true) {
+  if (release)
+    ReleaseMouseButtons()
+
   enabled := false
   Gui, Show, Hide
 

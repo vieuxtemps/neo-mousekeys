@@ -88,7 +88,12 @@ Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " u
   Register(Options["ZonesMoveToMiddle"], Func("MoveToMiddle"))
 
   ; [System]
-  Register("~" Options["SystemDisableAndSendCombination"], Func("Disable"), "~")
+  Register(Options["SystemDisableAndSendCombination"], Func("Disable"), "~")
+
+  if (Options["SystemDisableOnPhysicalClick"]) {
+    for _, btn in mouseMap
+      Register(btn, Func("Disable").Bind(false), "~*")
+  }
 
   HotKey, If
 #If
