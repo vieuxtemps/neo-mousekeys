@@ -72,3 +72,7 @@ EnableHold(state) {
 
 LabelIgnore:
 return
+
+LabelMoveToMiddle:
+  MouseMove, A_ScreenWidth // 2, A_ScreenHeight // 2, 1
+return

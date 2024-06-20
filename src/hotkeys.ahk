@@ -1,3 +1,4 @@
+; Default enable hotkey
 HotKey, % Options["ActivationEnable"], LabelEnable
 
 ; Enable while holding a key
@@ -13,6 +14,7 @@ if (holdKey) {
 if (Options["ActivationEnableDouble"])
   HotKey, % "~" Options["ActivationEnableDouble"], LabelEnableDouble
 
+; Enabled section
 #If enabled
   HotKey, If, enabled
 
@@ -64,6 +66,8 @@ if (Options["ActivationEnableDouble"])
     if (Options["EdgeEnabled"])
       HotKey, % Options["EdgeModifier"] " & " Options["Movement" direction], LabelIgnore
   }
+
+  HotKey, % Options["ZonesMoveToMiddle"], LabelMoveToMiddle
 
   HotKey, If
 #If
