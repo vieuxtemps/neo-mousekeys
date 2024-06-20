@@ -41,3 +41,6 @@ SetTimer, CheckWheels, 10
 #Include src/wheels.ahk
 #Include src/edges.ahk
 #Include src/functions.ahk
+
+; Use for your own personal keybindings. Ignored if it doesn't exist, ignored by .gitignore
+#Include *i src/custom.ahk
