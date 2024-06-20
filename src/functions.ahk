@@ -86,7 +86,7 @@ EnableHold(state) {
 }
 
 MoveToMiddle() {
-  MouseMove, A_ScreenWidth // 2, A_ScreenHeight // 2, 1
+  MouseMove, A_ScreenWidth // 2, A_ScreenHeight // 2, % Options["EdgeDelay"]
 }
 
 LabelIgnore:
