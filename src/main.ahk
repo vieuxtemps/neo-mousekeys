@@ -1,5 +1,6 @@
 global v := Options["MouseSpeedInitial"]
 global slowToggle := false
+global lastEdge := A_TickCount
 
 Loop {
   if (not enabled) {

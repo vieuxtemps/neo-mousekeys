@@ -1,10 +1,13 @@
 CheckEdges:
   if (enabled) {
     if (Options["EdgeEnabled"] and GetKeyState(Options["EdgeModifier"], "P")) {
-      UpdateMonitors()
+      if ((Options["EdgeSensitivity"] == 0) and (A_TickCount - lastEdge < 500))
+        return
 
       for direction, _ in axisMap {
         if (GetKeyState(Options["Movement" direction], "P")) {
+          UpdateMonitors()
+
           offsetX := Monitor_Right * Options["EdgeOffsetX"]
           offsetY := Monitor_Bottom * Options["EdgeOffsetY"]
 
@@ -18,6 +21,7 @@ CheckEdges:
 
           if (eX or eY) {
             MouseMove, % eX, % eY, % Options["EdgeDelay"]
+            lastEdge := A_TickCount
             if (Options["EdgeSensitivity"] <= 1)
               return
           }
