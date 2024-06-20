@@ -130,5 +130,9 @@ ToggleFastMode() {
   fastToggle := not fastToggle
 }
 
+RestartNeomousekeys() {
+  Reload
+}
+
 LabelIgnore:
 return

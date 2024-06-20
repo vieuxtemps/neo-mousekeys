@@ -1,6 +1,6 @@
 ; [Activation]
-; Default enable hotkey
 
+; Default enable hotkey
 ActivationEnable := Options["ActivationEnable"]
 if (Options["SystemDelayActivationWithSingleModifierKey"]) {
   Register(ActivationEnable, "LabelIgnore")
@@ -117,6 +117,8 @@ if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
   Register(Options["ZonesMoveToMiddle"], Func("MoveToMiddle"))
 
   ; [System]
+  Register(Options["SystemRestartNeomousekeys"], Func("RestartNeomousekeys"))
+
   Register(Options["SystemDisableAndSendCombination"], Func("Disable"), "~")
 
   if (Options["SystemDisableOnPhysicalClick"]) {
