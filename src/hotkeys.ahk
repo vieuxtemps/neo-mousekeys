@@ -23,7 +23,7 @@ if (Options["ActivationEnableDouble"])
     }
   }
 
-  for _, btn in ["Left", "Middle", "Right"] {
+  for btn, _ in mouseMap {
     for _, modifier in ["", "^", "+"] {
       if (modifier != "+" or Options["SystemAllowShiftHotkeys"]) {
         fnDown := Func("DoClick").Bind(btn, "down")
@@ -31,6 +31,15 @@ if (Options["ActivationEnableDouble"])
         HotKey, % modifier Options["Click" btn], % fnDown
         HotKey, % modifier Options["Click" btn] " up", % fnUp
       }
+    }
+
+    hold := Options["ClickHold" btn]
+    if (hold) {
+      fnHold := Func("ToggleClick").Bind(btn)
+      HotKey, % hold, % fnHold
+
+      if (Options["SystemAllowShiftHotkeys"])
+        HotKey, % "+" hold, % fnHold
     }
 
     if (Options["EdgeEnabled"]) {
