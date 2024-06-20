@@ -12,6 +12,9 @@
 Menu, Tray, Tip, Neo Mousekeys
 
 #Include src/options.ahk
+#Include src/init-wheels.ahk
+
+OnExit, LabelExit
 
 if (Options["SystemHideTrayIcon"])
   Menu, Tray, NoIcon
@@ -25,8 +28,6 @@ Thread, Interrupt, 0
 
 global axisMap := { "Left": [-1, 0], "Down": [0, 1], "Up": [0, -1], "Right": [1, 0] }
 global mouseMap := { "Left": "LButton", "Middle": "MButton", "Right": "RButton" }
-
-global wheelSplit := StrSplit(Options["ModeWheelFast"], A_Space, A_Space)
 
 #Include src/init-indicator.ahk
 #Include src/hotkeys.ahk
@@ -84,3 +85,10 @@ Loop {
 #Include src/wheels.ahk
 #Include src/edges.ahk
 #Include src/functions.ahk
+
+LabelExit:
+  ; Safety check: restores wheel speed (application
+  ; could be closed while holding the modifier).
+  SetWheelSpeed(originalScrollLines)
+ExitApp
+return
