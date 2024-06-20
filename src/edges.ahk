@@ -16,8 +16,11 @@ CheckEdges:
           eY := direction == "Down" ? A_ScreenHeight - offsetY : eY
           eY := eY == 0 ? emY : eY
 
-          if (eX or eY)
+          if (eX or eY) {
             MouseMove, % eX, % eY, % Options["EdgeDelay"]
+            if (Options["EdgeSensitivity"] <= 1)
+              return
+          }
         }
       }
     }
