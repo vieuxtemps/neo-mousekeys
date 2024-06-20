@@ -54,11 +54,11 @@ If you want to set activation keys as a single key, use keynames found in the of
 
 Examples: `Enable=RControl`, `Enable=LControl & RAlt`.
 
-# Running automatically at startup
+# Permissions, security and running automatically at startup
 
-If you wish this application to run automatically at startup, press `Windows+R` to open the Run window, type `shell:startup` to open your current user's startup folder and create a shortcut for neo-mousekeys.ahk or neo-mousekeys.exe there.
+Some applications running with elevated privileges (such Task Manager, Windows Settings and other system tools) will completely ignore external input from an application being run with normal privileges. Run this application as administrator if you wish to send input to such applications.
 
-Note: if you are using this application to interact with other applications running with elevated/administrator privileges, this application must run with administrator privileges as well, otherwise inputs will be ignored when such applications are focused.
+If you wish this application to run automatically at startup (with or without elevated privileges), or if you are concerned about security (false positives), see the [shared project documentation](https://github.com/vieuxtemps/ahk-shared-docs).
 
 Note: if you use another AutoHotkey script that maps Capslock to Esc, you might need to start neo-mousekeys after such script if you wish to use Capslock as a Disable key.
 
@@ -105,6 +105,7 @@ Here are some improvements of neo-mousekeys when compared to mouseable:
 - New feature: slow and fast modes for wheel scrolling.
 - New feature: click-then-disable.
 - New feature: custom indicators.
+- New feature: toggle slow mode (cursor & wheels).
 
 <p align="center">
   <img src="demo-2.gif" />
