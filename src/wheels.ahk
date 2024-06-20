@@ -1,31 +1,47 @@
 CheckWheels:
-  if (not enabled)
+  if (SCROLLING or not enabled)
     return
 
-  velocity := wNORMAL
+  for direction, _ in axisMap
+    wheelStatus[direction] := GetKeyState(Options["Wheel" direction], "P")
 
-  for _, key in wheelSlowSplit {
-    if (GetKeyState(key, "P")) {
-      velocity := wSLOW
-      break
-    }
-  }
+  if ((wheelStatus["Up"] and wheelStatus["Down"]) or (wheelStatus["Left"] and wheelStatus["Right"]))
+    return
 
-  if (velocity == wNORMAL) {
-    for _, key in wheelFastSplit {
-      if (GetKeyState(key, "P")) {
-        velocity := wFAST
-        slowToggle := false
+  SCROLLING := true
+  winPressed := GetKeyState("LWin", "P") or GetKeyState("RWin", "P")
+
+  if (not (Options["SystemIgnoreWinKey"] and winPressed)) {
+    for direction, _ in axisMap {
+      if (wheelStatus[direction]) {
+        velocity := wNORMAL
+
+        for _, key in wheelSlowSplit {
+          if (GetKeyState(key, "P")) {
+            velocity := wSLOW
+            break
+          }
+        }
+
+        if (velocity == wNORMAL) {
+          for _, key in wheelFastSplit {
+            if (GetKeyState(key, "P")) {
+              velocity := wFAST
+              slowToggle := false
+              break
+            }
+          }
+        }
+
+        if (slowToggle)
+          velocity := wSLOW
+
+        Send, % "{Blind}{" Options["Wheel" direction] " up}"
+        WheelScroll(velocity, direction)
         break
       }
     }
   }
 
-  if (slowToggle)
-    velocity := wSLOW
-
-  for direction, _ in axisMap {
-    if (GetKeyState(Options["Wheel" direction], "P"))
-      WheelScroll(velocity, direction)
-  }
+  SCROLLING := false
 return

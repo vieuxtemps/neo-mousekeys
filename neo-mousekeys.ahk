@@ -1,6 +1,9 @@
 #Persistent
 #SingleInstance Force
 #MaxHotkeysPerInterval 300
+#MaxThreads 255
+#MaxThreadsPerHotkey 5
+#MaxThreadsBuffer On
 #UseHook
 
 ;@Ahk2Exe-SetMainIcon icons\disabled.ico
@@ -13,6 +16,8 @@ Menu, Tray, Tip, Neo Mousekeys
 
 #Include src/monitors.ahk
 #Include src/options.ahk
+global SCROLLING := false
+global WHEELTIME := 20
 #Include src/init-wheels.ahk
 
 global CURSOR_TIMEOUT := Options["CursorHideCursorAfterSeconds"] * 1000
@@ -28,7 +33,7 @@ else if (not A_IsCompiled)
 CoordMode, Mouse, Screen
 SetKeyDelay, -1
 SetBatchLines, % Options["SystemCPUCycles"]
-Thread, Interrupt, 0
+Process, Priority,, % Options["SystemProcessPriority"]
 
 global axisMap := { "Left": [-1, 0], "Down": [0, 1], "Up": [0, -1], "Right": [1, 0] }
 global mouseMap := { "Left": "LButton", "Middle": "MButton", "Right": "RButton" }

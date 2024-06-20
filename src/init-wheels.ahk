@@ -1,9 +1,10 @@
 global wheelFastSplit := StrSplit(Options["ModeWheelFast"], A_Space, A_Space)
 global wheelSlowSplit := StrSplit(Options["ModeWheelSlow"], A_Space, A_Space)
 
-global wFAST := Options["ModeSpeedWheelFast"]
-global wSLOW := Options["ModeSpeedWheelSlow"]
-global wNORMAL := Options["ModeSpeedWheelNormal"]
+global wFAST := Options["ModeSpeedWheelFast"] * WHEELTIME / 10
+global wSLOW := Options["ModeSpeedWheelSlow"] * WHEELTIME / 10
+global wNORMAL := Options["ModeSpeedWheelNormal"] * WHEELTIME / 10
+global wheelStatus := { "Left": 0, "Down": 0, "Up": 0, "Right": 0 }
 
 global releaseShift := InStr(Options["ModeWheelSlow"], "Shift", 0) ? true : false
 
