@@ -48,9 +48,13 @@ ToggleClick(btn) {
   UpdateIndicatorColors(next)
 }
 
-Enable() {
+IsAllowed() {
+  if (enabled and Options["SystemForwardActivationKeysWhenEnabled"])
+    return false
+
+  ; Ignore list
   if (WinActive("ahk_group IgnoreGroup")) {
-    return
+    return false
   }
 
   ; Ignore when in fullscreen
@@ -59,10 +63,14 @@ Enable() {
     if (X == Monitor_Left and Y == Monitor_Top
       and W == (Monitor_Right - Monitor_Left)
       and H == (Monitor_Bottom - Monitor_Top)) {
-      return
+      return false
     }
   }
 
+  return true
+}
+
+Enable() {
   if (Options["CursorHideCursorAfterSeconds"]) {
     cursor := true
     lastCursorActivity := A_TickCount

@@ -1,27 +1,4 @@
-; [Activation]
-
-; Default enable hotkey
-ActivationEnable := Options["ActivationEnable"]
-if (Options["SystemDelayActivationWithSingleModifierKey"]) {
-  Register(ActivationEnable, "LabelIgnore")
-  Register(ActivationEnable " & *", "LabelIgnore")
-  Register(ActivationEnable, Func("EnableDelayed").Bind(ActivationEnable), "", " up")
-} else {
-  Register(ActivationEnable, Func("Enable"))
-}
-
-; Register symmetric hotkey if Enable is a combination
-if (InStr(ActivationEnable, " & ")) {
-  split := StrSplit(ActivationEnable, " & ")
-  Register(split[2] " & " split[1], Func("Enable"))
-}
-
-; Enable when double pressing a sequence
-Register(Options["ActivationEnableDouble"], Func("EnableDouble"), "~")
-
-; Enable while holding a key
-Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("down"))
-Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " up")
+; Ignore lists
 
 ; IgnoreGroup: don't enable when active
 if (Options["SystemIgnoreWhenActive"]) {
@@ -38,6 +15,38 @@ if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
       GroupAdd, IgnoreFullscreenGroup, ahk_exe %e%
   }
 }
+
+; [Activation]
+
+; Default enable hotkey
+ActivationEnable := Options["ActivationEnable"]
+
+#If IsAllowed()
+  HotKey, If, IsAllowed()
+
+  if (Options["SystemDelayActivationWithSingleModifierKey"]) {
+    Register(ActivationEnable, "LabelIgnore")
+    Register(ActivationEnable " & *", "LabelIgnore")
+    Register(ActivationEnable, Func("EnableDelayed").Bind(ActivationEnable), "", " up")
+  } else {
+    Register(ActivationEnable, Func("Enable"))
+  }
+
+  ; Register symmetric hotkey if Enable is a combination
+  if (InStr(ActivationEnable, " & ")) {
+    split := StrSplit(ActivationEnable, " & ")
+    Register(split[2] " & " split[1], Func("Enable"))
+  }
+
+  ; Enable when double pressing a sequence
+  Register(Options["ActivationEnableDouble"], Func("EnableDouble"), "~")
+
+  ; Enable while holding a key
+  Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("down"))
+  Register(Options["ActivationEnableHold"], Func("EnableHold").Bind("up"), "", " up")
+
+  HotKey, If
+#If
 
 ; Enabled section
 #If enabled
@@ -120,7 +129,7 @@ if (Options["SystemIgnoreWhenFullscreenExceptions"]) {
   ; [System]
   Register(Options["SystemDisableAndSendCombination"], Func("Disable"), "~")
 
-  if (Options["SystemDisableOnPhysicalClick"]) {
+  if (Options["CursorDisableOnPhysicalClick"]) {
     for _, btn in mouseMap
       Register(btn, Func("Disable").Bind(false), "~*")
   }
