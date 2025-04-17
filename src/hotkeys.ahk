@@ -84,11 +84,20 @@ ActivationEnable := Options["ActivationEnable"]
   ; [Click]
   for btn, _ in mouseMap {
     ; Registers click functionality (Standard, Ctrl and Shift-clicks)
-    for _, modifier in ["", "^", "+"] {
-      if (modifier != "+" or Options["SystemAllowShiftHotkeys"]) {
-        Register(Options["Click" btn], Func("DoClick").Bind(btn, "down"), modifier)
-        Register(Options["Click" btn], Func("DoClick").Bind(btn, "up"), modifier, " up")
+    if (btn = "Left") {
+      for _, modifier in ["", "^", "+"] {
+        if (modifier != "+" or Options["SystemAllowShiftHotkeys"]) {
+          Register(Options["Click" btn], Func("DoClick").Bind(btn, "down"), modifier)
+          Register(Options["Click" btn], Func("DoClick").Bind(btn, "up"), modifier, " up")
+        }
+
+        Register(Options["Click" btn], Func("DoClick").Bind(btn, "down"), "^+")
+        Register(Options["Click" btn], Func("DoClick").Bind(btn, "up"), "^+", " up")
       }
+    } else {
+      ; Registers right and middle clicks (don't allow modifiers for them)
+      Register(Options["Click" btn], Func("DoClick").Bind(btn, "down"), "")
+      Register(Options["Click" btn], Func("DoClick").Bind(btn, "up"), "", " up")
     }
 
     ; Registers hold/toggle click functionality
