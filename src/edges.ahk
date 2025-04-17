@@ -1,5 +1,7 @@
 CheckEdges:
   if (enabled) {
+    UpdateMonitors()
+
     if (Options["EdgeEnabled"] and GetKeyState(Options["EdgeModifier"], "P")) {
       if ((Options["EdgeSensitivity"] == 0) and (A_TickCount - lastEdge < 200))
         return
@@ -11,7 +13,6 @@ CheckEdges:
 
       for direction, _ in axisMap {
         if (GetKeyState(Options["Movement" direction], "P")) {
-          UpdateMonitors()
 
           L := Monitor_Left, R := Monitor_Right, T := Monitor_Top, B := Monitor_Bottom
 

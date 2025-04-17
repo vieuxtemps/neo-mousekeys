@@ -7,9 +7,10 @@ Register(keys, target, prefix := "", suffix := "") {
 }
 
 UpdateIndicatorColors(state) {
-  color := state == "down" ? Options["IndicatorColorDragging"] : Options["IndicatorColor"]
-  Gui, Font, c%color%
-  GuiControl, Font, Mode
+  if (state == "down")
+    SystemCursor("C", "hold.cur")
+  else
+    SystemCursor("C")
 }
 
 IsBusy(release := false) {
@@ -74,10 +75,10 @@ Enable() {
   if (Options["CursorHideCursorAfterSeconds"]) {
     cursor := true
     lastCursorActivity := A_TickCount
-    SystemCursor(1)
   }
 
   enabled := true
+  SystemCursor("C")
 
   if (A_IsCompiled)
     Menu, Tray, Icon, % A_ScriptFullPath, -206, 1
@@ -94,8 +95,8 @@ Disable(release := true) {
   if (release)
     ReleaseMouseButtons()
 
+  SystemCursor(1)
   enabled := false
-  Gui, Show, Hide
 
   if (A_IsCompiled)
     Menu, Tray, Icon, % A_ScriptFullPath, -159, 1
