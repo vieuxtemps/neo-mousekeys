@@ -2,16 +2,21 @@ CheckWheels:
   if (SCROLLING or not enabled)
     return
 
-  for direction, _ in axisMap
-    wheelStatus[direction] := GetKeyState(Options["Wheel" direction], "P")
+  for direction, _ in axisMap {
+    wheelStatus[direction] := 0
+
+    for _, key in wheelActivationKeys[direction] {
+      wheelStatus[direction] := wheelStatus[direction] or GetKeyState(key, "P")
+    }
+  }
 
   if ((wheelStatus["Up"] and wheelStatus["Down"]) or (wheelStatus["Left"] and wheelStatus["Right"]))
     return
 
   SCROLLING := true
-  winPressed := GetKeyState("LWin", "P") or GetKeyState("RWin", "P")
+  modifiersPressed := GetKeyState("Ctrl", "P") or GetKeyState("LWin", "P") or GetKeyState("RWin", "P") or GetKeyState("Alt", "P")
 
-  if (not (Options["SystemIgnoreWinKey"] and winPressed)) {
+  if (not modifiersPressed) {
     for direction, _ in axisMap {
       if (wheelStatus[direction]) {
         velocity := wNORMAL
