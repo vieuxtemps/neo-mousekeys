@@ -18,6 +18,10 @@ SetBatchLines, % Options["SystemCPUCycles"]
 Process, Priority,, % Options["SystemProcessPriority"]
 CoordMode, Mouse, Screen
 
+DPI_AWARENESS := Options["SystemDpiAwareness"]
+if (DPI_AWARENESS)
+  DllCall("SetThreadDpiAwarenessContext", "ptr", DPI_AWARENESS)
+
 Menu, Tray, Tip, Neo Mousekeys
 OnExit, ExitSub
 

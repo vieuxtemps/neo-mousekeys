@@ -2,6 +2,7 @@ global v := Options["MouseSpeedInitial"]
 global slowToggle := false
 global fastToggle := false
 global lastEdge := A_TickCount
+VarSetCapacity(point, 8)
 
 Loop {
   if (not enabled) {
@@ -46,7 +47,17 @@ Loop {
     else if (fastToggle)
       factor := Options["ModeSpeedFast"]
 
-    MouseMove, % dx * v * factor, % dy * v * factor, 1, R
+    if (Options["SystemLegacyMouseMoveMode"]) {
+      MouseMove, % dx * v * factor, % dy * v * factor, 1, R
+    } else {
+      DllCall("GetCursorPos", "ptr", &point)
+      curX := NumGet(point, 0, "int")
+      curY := NumGet(point, 4, "int")
+      newX := curX + dx * v * factor
+      newY := curY + dy * v * factor
+      DllCall("SetCursorPos", "int", newX, "int", newY)
+      Sleep, 10
+    }
 
     a := Options["MouseSpeedAcceleration"]
     max := Options["MouseSpeedMax"]
