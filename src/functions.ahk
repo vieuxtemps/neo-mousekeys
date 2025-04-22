@@ -7,7 +7,9 @@ Register(keys, target, prefix := "", suffix := "") {
 }
 
 UpdateIndicatorColors(state) {
-  if (state == "down")
+  if (not enabled)
+    SystemCursor(1)
+  else if (state == "down")
     SystemCursor("C", "hold.cur")
   else
     SystemCursor("C")
@@ -92,11 +94,12 @@ EnableDelayed(key) {
 }
 
 Disable(release := true) {
+  enabled := false
+
   if (release)
     ReleaseMouseButtons()
 
   SystemCursor(1)
-  enabled := false
 
   if (A_IsCompiled)
     Menu, Tray, Icon, % A_ScriptFullPath, -159, 1
